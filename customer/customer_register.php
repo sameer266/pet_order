@@ -2,11 +2,11 @@
 require_once "../connection.php";
 
 if(!empty($_POST)){ 
-    $name=$_POST['name'];
-    $email=$_POST['email'];
-    $password=$_POST['password'];
-    $address=$_POST['address'];
-    $phonenumber=$_POST['phonenumber'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $address = $_POST['address'];
+    $phonenumber = $_POST['phonenumber'];
     
     // Validation
     $errors = [];
@@ -22,9 +22,10 @@ if(!empty($_POST)){
 
     if(empty($password)) {
         $errors['password'] = "Password is required";
-    }elseif(strlen($password)<8){
-        $errors['password']="Password must be more than 8 characters";
+    } elseif(strlen($password) < 8){
+        $errors['password'] = "Password must be more than 8 characters";
     }
+
     if(empty($address)) {
         $errors['address'] = "Address is required";
     }
@@ -37,16 +38,14 @@ if(!empty($_POST)){
 
     if(empty($errors)) {
         // Proceed with insertion
-        $password = md5($password); // MD5 hash the password
         $sql = "INSERT INTO customer (name, email, password, address, phonenumber) VALUES ('$name', '$email', '$password', '$address', '$phonenumber')";
-        $result=mysqli_query($conn,$sql);
+        $result = mysqli_query($conn, $sql);
         if($result){
             echo "Registration successful";
         }
     }
     
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -64,35 +63,35 @@ if(!empty($_POST)){
         <form action="" method="post">
             <div class="input-container">
                 <label for="name" class="icon"><i class="fas fa-user"></i></label>
-                <input type="text" id="name" name="name" placeholder="Name" >
+                <input type="text" id="name" name="name" placeholder="Name">
                 <?php if(isset($errors['name'])): ?>
                     <span class="error"><?= $errors['name']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="input-container">
                 <label for="email" class="icon"><i class="fas fa-envelope"></i></label>
-                <input type="text" id="email" name="email" placeholder="Email" >
+                <input type="text" id="email" name="email" placeholder="Email">
                 <?php if(isset($errors['email'])): ?>
                     <span class="error"><?= $errors['email']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="input-container">
                 <label for="password" class="icon"><i class="fas fa-lock"></i></label>
-                <input type="password" id="password" name="password" placeholder="Password" >
+                <input type="password" id="password" name="password" placeholder="Password">
                 <?php if(isset($errors['password'])): ?>
                     <span class="error"><?= $errors['password']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="input-container">
-                <label for="address" class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></i></label>
-                <input type="address" id="address" name="address" placeholder="Address" >
+                <label for="address" class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></label>
+                <input type="address" id="address" name="address" placeholder="Address">
                 <?php if(isset($errors['address'])): ?>
                     <span class="error"><?= $errors['address']; ?></span>
                 <?php endif; ?>
             </div>
             <div class="input-container">
                 <label for="phonenumber" class="icon"><i class="fa-solid fa-phone"></i></label>
-                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phonenumber" >
+                <input type="tel" id="phonenumber" name="phonenumber" placeholder="Phone number">
                 <?php if(isset($errors['phonenumber'])): ?>
                     <span class="error"><?= $errors['phonenumber']; ?></span>
                 <?php endif; ?>

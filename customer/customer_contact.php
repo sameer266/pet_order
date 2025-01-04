@@ -107,7 +107,7 @@
         </form>
     </div>
     <div class="back-to-home">
-        <button onclick="window.location.href = 'index.php';">Back to Home</button>
+        <button onclick="window.location.href = 'customer_index.php';">Back to Home</button>
     </div>
 </div>
 

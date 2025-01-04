@@ -28,13 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Sanitize email
         $email = mysqli_real_escape_string($conn, $email);
 
-        // Hash the password
-        $hashedPassword = md5($password);
-
         // Use prepared statements to securely query the database
         $sql = "SELECT * FROM customer WHERE email = ? AND password = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $email, $hashedPassword);
+        $stmt->bind_param("ss", $email, $password);  // No hashing here
         $stmt->execute();
         $result = $stmt->get_result();
 

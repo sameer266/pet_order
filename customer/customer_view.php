@@ -7,12 +7,10 @@ if (isset($_GET['id'])) {
     $dogId = $_GET['id'];
     
     // Fetch data from the database for the specific dog using the ID
-    $sql = "SELECT dogs.*, breed.breed_name, size,color
+    $sql = "SELECT dogs.*, breed.breed_name, size, color
         FROM dogs 
         JOIN breed ON dogs.breed_id = breed.id 
-          
         WHERE dogs.id = $dogId";
-
 
     $result = mysqli_query($conn, $sql);
 }
@@ -20,10 +18,6 @@ if (isset($_GET['id'])) {
 $dsql = "SELECT quantity FROM dogs WHERE dogs.id = $dogId";
 $dresult = mysqli_query($conn, $dsql);
 $dquantity = mysqli_fetch_assoc($dresult);
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -41,53 +35,52 @@ $dquantity = mysqli_fetch_assoc($dresult);
 
 <div id="header">
     <a href="#"><i class="fas fa-paw"></i></a>
-       <nav>
-            <ul>
-                <li><a href="../customer/customer_index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="orders.php">Orders</a></li>
-               
-                <a href="customer_view_cart.php" id="cart-icon" class="icon"><i class="fas fa-shopping-cart"></i> <span id="cart-badge" class="badge"></span></a>
-            </ul>
-        </nav>
-    </div>
+    <nav>
+        <ul>
+            <li><a href="../customer/customer_index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <li><a href="orders.php">Orders</a></li>
+            <a href="customer_view_cart.php" id="cart-icon" class="icon"><i class="fas fa-shopping-cart"></i> <span id="cart-badge" class="badge"></span></a>
+        </ul>
+    </nav>
+</div>
 
-    <div class="container">
-        <?php while($dog=mysqli_fetch_assoc($result)) { ?>
-            <div class="item">
-                <div class="image">
-                    <img src="../admin/uploads/<?= $dog['image'] ?>" alt="<?= $dog['breed'] ?>">
-                </div>
-                <div class="title">
-                    <h1><?= $dog['breed_name'] ?></h1>
-                    <p>Gender:<?= $dog['gender'] ?></p>
-                    <p>Age: <?= $dog['age'] ?></p>
-                    <p>Size: <?= $dog['size'] ?></p>
-                    <p>Color: <?= $dog['color'] ?></p>
-                    <p>Description: <?= $dog['description'] ?></p>
-                    <p>Price: <?= $dog['price'] ?></p>
-                    <p>Quantity: <?= $dog['quantity'] ?></p>
-                </div>
+<div class="container">
+    <?php while($dog = mysqli_fetch_assoc($result)) { ?>
+        <div class="item">
+            <div class="image">
+                <img src="../admin/uploads/<?= $dog['image'] ?>" >
             </div>
-        
-            <div class="icons">
-            <?php if ($dog['quantity'] == 0) { ?>
-                <div   class='out-of-stock'>Out of stock!!!</div>;
-            <?php } else { ?>
-                <a href="#" class="icon add-to-cart" data-dog-id="<?= $dog['id'] ?>" data-user-id="<?= $_SESSION['user_id'] ?>">
-                    <button>Add to Cart</button>
-                </a>
+            <div class="title">
+                <h1><?= $dog['breed_name'] ?></h1>
+                <p>Gender: <?= $dog['gender'] ?></p>
+                <p>Age: <?= $dog['age'] ?></p>
+                <p>Size: <?= $dog['size'] ?></p>
+                <p>Color: <?= $dog['color'] ?></p>
+                <p>Description: <?= $dog['description'] ?></p>
+                <p>Price: <?= $dog['price'] ?></p>
+                <p>Quantity: <?= $dog['quantity'] ?></p>
             </div>
-            <div class="buy">
-                <a href="checkout.php?dog_id=<?= $dog['id'] ?>&cid=<?= $_SESSION['user_id'] ?>">
-                    <button>Buy Now</button>
-                </a>
-            </div>
-            <?php } ?>
+        </div>
+
+        <div class="icons">
+        <?php if ($dog['quantity'] == 0) { ?>
+            <div class="out-of-stock">Out of stock!!!</div>
+        <?php } else { ?>
+            <a href="#" class="icon add-to-cart" data-dog-id="<?= $dog['id'] ?>" data-user-id="<?= $_SESSION['user_id'] ?>">
+                <button>Add to Cart</button>
+            </a>
+        </div>
+
+        <div class="buy">
+            <a href="checkout.php?dog_id=<?= $dog['id'] ?>&cid=<?= $_SESSION['user_id'] ?>">
+                <button>Buy Now</button>
+            </a>
+        </div>
         <?php } ?>
-    </div>
-
+    <?php } ?>
+</div>
 
 </body>
 
@@ -95,6 +88,7 @@ $dquantity = mysqli_fetch_assoc($dresult);
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var addToCartButtons = document.querySelectorAll('.add-to-cart');
+    
     // Add click event listener to each "Add to Cart" button
     addToCartButtons.forEach(function(button) {
         button.addEventListener('click', function(event) {
@@ -104,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var dogId = button.getAttribute('data-dog-id');
             var userId = button.getAttribute('data-user-id');
             
-
             // Check if dogId and userId are not null or undefined
             if (dogId && userId) {
                 var formData = new FormData();
@@ -116,13 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     method: 'POST',
                     body: formData // Send form data
                 })
-                .then(response => {
-                    // Parse response as JSON
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     // Handle JSON response data
-                    alert(data.msg)
+                    alert(data.msg);
                 })
                 .catch(error => {
                     // Handle errors
@@ -134,6 +124,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
 </script>

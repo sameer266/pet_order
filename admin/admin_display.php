@@ -45,7 +45,7 @@ if($_SESSION['is_login'] != 1){
     <a href="admin_add_breed.php"><button class="add_breed">Add Breed</button></a>
     <h1>Admin Display Panel</h1>
     <div class="buttons">
-    <a href="pending_orderr.php"><button class="order">Orders</button></a>
+    <a href="pending_order.php"><button class="order">Orders</button></a>
     <a href="admin_logout.php"><button class="logout">Logout</button></a>
     </div>
 </header>

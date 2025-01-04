@@ -27,7 +27,7 @@ if (isset($_POST['id'])) {
             $restore_res = mysqli_query($conn, $restore_sql);
 
             if ($restore_res) {
-                echo "<script>alert('Order canceled and pet quantity restored successfully.'); window.location.href='pending_orderr.php';</script>";
+                echo "<script>alert('Order canceled and pet quantity restored successfully.'); window.location.href='pending_order.php';</script>";
             } else {
                 echo "<script>alert('Failed to restore the pet quantity.'); window.location.href='pending_orderr.php';</script>";
             }

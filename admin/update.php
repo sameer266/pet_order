@@ -5,7 +5,7 @@ require_once '../connection.php';
 
 if (!isset($_SESSION['is_login'])) {
     $_SESSION['error'] = 'You must log in';
-    // header("Location: admin_index.php");
+    header("Location: admin_index.php");
 }
 
 $id = null;
